@@ -1,0 +1,9 @@
+Program to convert output of Dataflow to LCIO format
+
+To use, first edit the LCIO line of "env.sh" to point towards your installation.
+
+Compile with the makefile and run.
+
+Arguments :
+
+./dataflow2lcio {input=treeFile.root} {output=outFile} {Number of rocs = 8}
