@@ -119,6 +119,9 @@ int main(int argc, char ** argv) {
   //Creates charge vectors that will store hits
   vector <float> * charge = new vector <float> [Ndet];
   vector <float> * chargeSparse = new vector <float> [Ndet];
+  
+  int totalHits=0;
+  
   //Event loop
 
   while ( loopbreak>0 ) {      //loopbreak = -1 if end of file, 1 if not.
@@ -155,7 +158,6 @@ int main(int argc, char ** argv) {
 	//Returns -1 at the end of the file to exit event loop
 	loopbreak = reader->getSimulatedEvent(&p,t); 
 
-// 	loopbreak= 1;//DEBUG WARNING
 
 	event->setTimeStamp(t.timestamp);
 	
@@ -166,7 +168,7 @@ int main(int argc, char ** argv) {
 	    int det = p[h].roc;
 	    if (det > Ndet-1 || det <0)
 		{cerr<<"roc="<<det<<" not between 0 and "<<Ndet-1<<"! event ignored."<<endl; continue;}
-	    
+	    totalHits++;
 	    charge[det].push_back(p[h].col);
 	    charge[det].push_back(p[h].row);
 	    charge[det].push_back(p[h].raw);
@@ -224,7 +226,7 @@ int main(int argc, char ** argv) {
   
   lcWriter->close();
 
-  cout<<"done"<<endl;
+  cout<<"Done converting "<<eventNumber<<" events ("<<totalHits<<" hits)"<<endl;
   return 0;
 }
 
